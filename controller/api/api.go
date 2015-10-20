@@ -120,7 +120,7 @@ func (a *Api) Run() error {
 	apiRouter.HandleFunc("/api/accounts/{username}", a.account).Methods("GET")
 	apiRouter.HandleFunc("/api/accounts/{username}", a.deleteAccount).Methods("DELETE")
 	apiRouter.HandleFunc("/api/svcregs", a.serviceRegs).Methods("GET")
-	apiRouter.HandleFunc("/api/svcregs/create", a.saveServiceReg).Methods("GET")
+	apiRouter.HandleFunc("/api/svcregs", a.saveServiceReg).Methods("POST")
 	apiRouter.HandleFunc("/api/svcregs/{username}", a.serviceReg).Methods("GET")
 	apiRouter.HandleFunc("/api/svcregs/{username}", a.deleteServiceReg).Methods("DELETE")
 	apiRouter.HandleFunc("/api/roles", a.roles).Methods("GET")
