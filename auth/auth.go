@@ -23,6 +23,11 @@ type (
 		Tokens    []*AuthToken `json:"-" gorethink:"tokens"`
 		Roles     []string     `json:"roles,omitempty" gorethink:"roles"`
 	}
+	ServiceReg struct {
+		ID          string      `json:"id,omitempty" gorethink:"id,omitempty"`
+		ServiceName string      `json:"service_name,omitempty" gorethink:"service_name,omitempty"`
+		ServiceDesc string      `json:"service_desc,omitempty" gorethink:"service_desc,omitempty"`
+	}
 
 	AuthToken struct {
 		Token     string `json:"auth_token,omitempty" gorethink:"auth_token"`

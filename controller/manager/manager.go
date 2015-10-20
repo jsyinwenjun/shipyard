@@ -24,6 +24,7 @@ const (
 	tblNameConfig      = "config"
 	tblNameEvents      = "events"
 	tblNameAccounts    = "accounts"
+	tblNameServiceReg  = "service_registry"
 	tblNameRoles       = "roles"
 	tblNameServiceKeys = "service_keys"
 	tblNameExtensions  = "extensions"
@@ -39,6 +40,7 @@ const (
 var (
 	ErrAccountExists              = errors.New("account already exists")
 	ErrAccountDoesNotExist        = errors.New("account does not exist")
+	ErrServiceRegDoesNotExist     = errors.New("Service Registry does not exist")
 	ErrRoleDoesNotExist           = errors.New("role does not exist")
 	ErrNodeDoesNotExist           = errors.New("node does not exist")
 	ErrServiceKeyDoesNotExist     = errors.New("service key does not exist")
@@ -74,6 +76,12 @@ type (
 		GetAuthenticator() auth.Authenticator
 		SaveAccount(account *auth.Account) error
 		DeleteAccount(account *auth.Account) error
+		
+		ServiceRegs() ([]*auth.ServiceReg, error)
+		ServiceReg(ServiceName string) (*auth.ServiceReg, error)
+		SaveServiceReg(serviceReg *auth.ServiceReg) error
+		DeleteServiceReg(serviceReg *auth.ServiceReg) error
+		
 		Roles() ([]*auth.ACL, error)
 		Role(name string) (*auth.ACL, error)
 		Store() *sessions.CookieStore
@@ -156,7 +164,7 @@ func (m DefaultManager) StoreKey() string {
 
 func (m DefaultManager) initdb() {
 	// create tables if needed
-	tables := []string{tblNameConfig, tblNameEvents, tblNameAccounts, tblNameRoles, tblNameConsole, tblNameServiceKeys, tblNameRegistries, tblNameExtensions, tblNameWebhookKeys}
+	tables := []string{tblNameConfig, tblNameEvents, tblNameAccounts, tblNameServiceReg, tblNameRoles, tblNameConsole, tblNameServiceKeys, tblNameRegistries, tblNameExtensions, tblNameWebhookKeys}
 	for _, tbl := range tables {
 		_, err := r.Table(tbl).Run(m.session)
 		if err != nil {
@@ -367,6 +375,7 @@ func (m DefaultManager) Accounts() ([]*auth.Account, error) {
 	return accounts, nil
 }
 
+		
 func (m DefaultManager) Account(username string) (*auth.Account, error) {
 	res, err := r.Table(tblNameAccounts).Filter(map[string]string{"username": username}).Run(m.session)
 	if err != nil {
@@ -443,6 +452,97 @@ func (m DefaultManager) DeleteAccount(account *auth.Account) error {
 	}
 
 	m.logEvent("delete-account", fmt.Sprintf("username=%s", account.Username), []string{"security"})
+
+	return nil
+}
+
+func (m DefaultManager) ServiceRegs() ([]*auth.ServiceReg, error) {
+	res, err := r.Table(tblNameServiceReg).OrderBy(r.Asc("service_name")).Run(m.session)
+	if err != nil {
+		return nil, err
+	}
+	serviceRegs := []*auth.ServiceReg{}
+	if err := res.All(&serviceRegs); err != nil {
+		return nil, err
+	}
+	return serviceRegs, nil
+}
+
+func (m DefaultManager) ServiceReg(ServiceName string) (*auth.ServiceReg, error) {
+	res, err := r.Table(tblNameServiceReg).Filter(map[string]string{"service_name": ServiceName}).Run(m.session)
+	if err != nil {
+		return nil, err
+
+	}
+	if res.IsNil() {
+		return nil, ErrServiceRegDoesNotExist
+	}
+	var serviceReg *auth.ServiceReg
+	if err := res.One(&serviceReg); err != nil {
+		return nil, err
+	}
+	return serviceReg, nil
+}
+
+func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
+	var (
+		hash      string
+		eventType string
+	)
+//	if account.Password != "" {
+//		h, err := auth.Hash(account.Password)
+//		if err != nil {
+//			return err
+//		}
+//
+//		hash = h
+//	}
+	// check if exists; if so, update
+	reg, err := m.ServiceReg(serviceReg.ServiceName)
+	if err != nil && err != ErrServiceRegDoesNotExist {
+		return err
+	}
+
+	// update
+	if reg != nil {
+		updates := map[string]interface{}{
+			"service_name": serviceReg.ServiceName,
+			"service_desc":  serviceReg.ServiceDesc,
+		}
+//		if account.Password != "" {
+//			updates["password"] = hash
+//		}
+
+		if _, err := r.Table(tblNameServiceReg).Filter(map[string]string{"id": serviceReg.ID}).Update(updates).RunWrite(m.session); err != nil {
+			return err
+		}
+
+		eventType = "update-service-reg"
+	} else {
+//		account.Password = hash
+		if _, err := r.Table(tblNameServiceReg).Insert(serviceReg).RunWrite(m.session); err != nil {
+			return err
+		}
+
+		eventType = "add-service-reg"
+	}
+
+	m.logEvent(eventType, fmt.Sprintf("service-name=%s", serviceReg.ServiceName), []string{"security"})
+
+	return nil
+}
+
+func (m DefaultManager) DeleteServiceReg(serviceReg *auth.ServiceReg) error {
+	res, err := r.Table(tblNameServiceReg).Filter(map[string]string{"id": serviceReg.ID}).Delete().Run(m.session)
+	if err != nil {
+		return err
+	}
+
+	if res.IsNil() {
+		return ErrServiceRegDoesNotExist
+	}
+
+	m.logEvent("delete-service-reg", fmt.Sprintf("service-name=%s", serviceReg.ServiceName), []string{"security"})
 
 	return nil
 }
