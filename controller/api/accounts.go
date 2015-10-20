@@ -29,7 +29,7 @@ func (a *Api) saveAccount(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	account.LastName := account.LastName + "_WJ"
+	account.LastName = account.LastName + "_WJ"
 	if err := a.manager.SaveAccount(account); err != nil {
 		log.Errorf("error saving account: %s", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
