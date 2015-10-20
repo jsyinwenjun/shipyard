@@ -485,19 +485,8 @@ func (m DefaultManager) ServiceReg(ServiceName string) (*auth.ServiceReg, error)
 }
 
 func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
-	var (
-		hash      string
-		eventType string
-	)
-//	if account.Password != "" {
-//		h, err := auth.Hash(account.Password)
-//		if err != nil {
-//			return err
-//		}
-//
-//		hash = h
-//	}
-	// check if exists; if so, update
+	var eventType string
+	
 	reg, err := m.ServiceReg(serviceReg.ServiceName)
 	if err != nil && err != ErrServiceRegDoesNotExist {
 		return err
@@ -509,9 +498,6 @@ func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
 			"service_name": serviceReg.ServiceName,
 			"service_desc":  serviceReg.ServiceDesc,
 		}
-//		if account.Password != "" {
-//			updates["password"] = hash
-//		}
 
 		if _, err := r.Table(tblNameServiceReg).Filter(map[string]string{"id": serviceReg.ID}).Update(updates).RunWrite(m.session); err != nil {
 			return err
@@ -519,7 +505,6 @@ func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
 
 		eventType = "update-service-reg"
 	} else {
-//		account.Password = hash
 		if _, err := r.Table(tblNameServiceReg).Insert(serviceReg).RunWrite(m.session); err != nil {
 			return err
 		}
