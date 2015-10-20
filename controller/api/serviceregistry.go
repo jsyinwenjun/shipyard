@@ -17,7 +17,7 @@ func (a *Api) serviceRegs(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	if err := json.NewEncoder(w).Encode(accounts); err != nil {
+	if err := json.NewEncoder(w).Encode(serviceRegs); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -25,7 +25,7 @@ func (a *Api) serviceRegs(w http.ResponseWriter, r *http.Request) {
 
 func (a *Api) saveServiceReg(w http.ResponseWriter, r *http.Request) {
 	var serviceReg *auth.ServiceReg
-	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&serviceReg); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
