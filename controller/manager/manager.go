@@ -499,7 +499,7 @@ func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
 			"service_desc":  serviceReg.ServiceDesc,
 		}
 
-		if _, err := r.Table(tblNameServiceReg).Filter(map[string]string{"id": serviceReg.ID}).Update(updates).RunWrite(m.session); err != nil {
+		if _, err := r.Table(tblNameServiceReg).Filter(map[string]string{"service_name": serviceReg.service_name}).Update(updates).RunWrite(m.session); err != nil {
 			return err
 		}
 
@@ -518,7 +518,7 @@ func (m DefaultManager) SaveServiceReg(serviceReg *auth.ServiceReg) error {
 }
 
 func (m DefaultManager) DeleteServiceReg(serviceReg *auth.ServiceReg) error {
-	res, err := r.Table(tblNameServiceReg).Filter(map[string]string{"id": serviceReg.ID}).Delete().Run(m.session)
+	res, err := r.Table(tblNameServiceReg).Filter(map[string]string{"service_name": serviceReg.service_name}).Delete().Run(m.session)
 	if err != nil {
 		return err
 	}
