@@ -33,7 +33,7 @@
                             }
                         })
                         .state('dashboard.editSvcReg', {
-                            url: '^/svcregs/edit/{username}',
+                            url: '^/svcregs/edit/{service_name}',
                             templateUrl: 'app/svcregs/edit.html',
                             controller: 'SvcRegEditController',
                             controllerAs: 'vm',
