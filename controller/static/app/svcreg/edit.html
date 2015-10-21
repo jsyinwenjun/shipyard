@@ -1,0 +1,51 @@
+<div class="ui padded grid">
+<div class="row">
+    <div class="column">
+        <div class="ui segment">
+            <div class="ui form" ng-submit="vm.editSvcReg()" ng-method="post">
+                <h4 class="ui dividing header">Service Registry Details</h4>
+                <label>Service Name</label>
+                <div class="field">
+                    <input type="text" name="service_name" ng-model="vm.service_name">
+                </div>
+                <label>Service Description</label>
+                <div class="field">
+                    <input type="text" name="service_desc" ng-model="vm.service_desc">
+                </div>
+                <div class="ui hidden divider"></div>
+                <div class="ui green submit button">Update Service Registry</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+$(function(){
+    $('.ui.form')
+        .form({
+            onSuccess: function() {
+                vm.editSvcReg();
+            },
+            service_name: {
+                identifier : 'service_name',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a service name'
+                }
+                ]
+            },
+            service_desc: {
+                identifier : 'service_desc',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a service description'
+                }
+                ]
+            }
+        });
+
+    $('.ui.checkbox').checkbox();
+});
+</script>

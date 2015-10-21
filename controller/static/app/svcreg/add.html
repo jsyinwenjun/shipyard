@@ -1,0 +1,72 @@
+<div class="ui padded grid">
+<div class="row">
+    <div class="column">
+        <div class="ui segment">
+            <div class="ui form" ng-submit="vm.addSvcReg()" ng-method="post">
+                <h4 class="ui dividing header">Service Registry Details</h4>
+                <label>Service Name</label>
+                <div class="field">
+                    <input type="text" name="service_name" ng-model="vm.service_name">
+                </div>
+                <label>Service Description</label>
+                <div class="field">
+                    <input type="text" name="service_desc" ng-model="vm.service_desc">
+                </div>
+                </div>
+                <div class="ui hidden divider"></div>
+                <div class="ui green submit button">Add Service Registry</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+$(function(){
+    $('.ui.form')
+        .form({
+            onSuccess: function() {
+                vm.addSvcReg();
+            },
+            username: {
+                identifier : 'username',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a username'
+                }
+                ]
+            },
+            firstName: {
+                identifier : 'firstName',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a first name'
+                }
+                ]
+            },
+            lastName: {
+                identifier : 'lastName',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a last name'
+                }
+                ]
+            },
+            password: {
+                identifier : 'password',
+                rules: [
+                {
+                    type   : 'empty',
+                    prompt : 'Please enter a password'
+                }
+                ]
+            }
+        });
+
+    $('.ui.checkbox').checkbox();
+});
+
+$('.ui.dropdown').dropdown();
+</script>
