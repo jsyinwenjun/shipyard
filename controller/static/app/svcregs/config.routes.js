@@ -40,7 +40,7 @@
                             authenticate: true,
                             resolve: {
                                 svcreg: ['SvcRegService', '$state', '$stateParams', function (SvcRegService, $state, $stateParams) {
-                                    return SvcRegService.getSvcReg($stateParams.username).then(null, function(errorData) {
+                                    return SvcRegService.getSvcReg($stateParams.service_name).then(null, function(errorData) {
                                         $state.go('error');
                                     });
                                 }]
