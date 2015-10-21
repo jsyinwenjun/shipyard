@@ -24,7 +24,6 @@
                 return;
             }
             vm.request = {
-                username: svcreg.service_name,
                 service_name: vm.service_name,
                 service_desc: vm.service_desc,
             }
