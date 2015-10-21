@@ -28,38 +28,20 @@ $(function(){
                 vm.addSvcReg();
             },
             username: {
-                identifier : 'username',
+                identifier : 'service_name',
                 rules: [
                 {
                     type   : 'empty',
-                    prompt : 'Please enter a username'
+                    prompt : 'Please enter a service name'
                 }
                 ]
             },
             firstName: {
-                identifier : 'firstName',
+                identifier : 'service_desc',
                 rules: [
                 {
                     type   : 'empty',
-                    prompt : 'Please enter a first name'
-                }
-                ]
-            },
-            lastName: {
-                identifier : 'lastName',
-                rules: [
-                {
-                    type   : 'empty',
-                    prompt : 'Please enter a last name'
-                }
-                ]
-            },
-            password: {
-                identifier : 'password',
-                rules: [
-                {
-                    type   : 'empty',
-                    prompt : 'Please enter a password'
+                    prompt : 'Please enter a service description'
                 }
                 ]
             }
