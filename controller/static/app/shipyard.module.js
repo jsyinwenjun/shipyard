@@ -15,6 +15,7 @@
                 'shipyard.nodes',
                 'shipyard.images',
                 'shipyard.filters',
+                'shipyard.svcregs',
                 'angular-jwt',
                 'base64',
                 'selectize',
