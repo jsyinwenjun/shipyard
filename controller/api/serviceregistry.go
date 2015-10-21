@@ -41,7 +41,7 @@ func (a *Api) saveServiceReg(w http.ResponseWriter, r *http.Request) {
 
 func (a *Api) serviceReg(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	servicename := vars["service-name"]
+	servicename := vars["service_name"]
 
 	serviceReg, err := a.manager.ServiceReg(servicename)
 	if err != nil {
@@ -57,7 +57,7 @@ func (a *Api) serviceReg(w http.ResponseWriter, r *http.Request) {
 }
 func (a *Api) deleteServiceReg(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	servicename := vars["service-name"]
+	servicename := vars["service_name"]
 
 	serviceReg, err := a.manager.ServiceReg(servicename)
 	if err != nil {
