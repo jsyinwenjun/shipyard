@@ -7,7 +7,7 @@
     </div>
     <div class="right aligned right floated column">
         <div class="ui small icon input">
-            <input ng-model="tableFilter" placeholder="Search eureka-servicesservices..." reset-field/>
+            <input ng-model="tableFilter" placeholder="Search eureka_servicesservices..." reset-field/>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="row" ng-show="vm.eureka-services.length === 0">
+<div class="row" ng-show="vm.eureka_services.length === 0">
     <div class="column">
         <div class="ui icon message">
             <i class="info icon"></i>
@@ -37,7 +37,7 @@
 
 <div class="row" ng-show="filteredEurekaServices.length>0">
     <div class="column">
-        <table class="ui sortable celled table" ng-show="vm.eureka-services">
+        <table class="ui sortable celled table" ng-show="vm.eureka_services">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -49,7 +49,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="n in filteredEurekaServices = (vm.eureka-services | filter:tableFilter)">
+                <tr ng-repeat="n in filteredEurekaServices = (vm.eureka_services | filter:tableFilter)">
                     <td>{{n.name}}</td>
                     <td>{{n.addr}}</td>
                     <td>{{n.containers}}</td>
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<div class="row" ng-show="vm.eureka-services.length > 0 && filteredEurekaServices.length === 0">
+<div class="row" ng-show="vm.eureka_services.length > 0 && filteredEurekaServices.length === 0">
     <div class="column">
         <div class="ui icon message">
             <i class="info icon"></i>

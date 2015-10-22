@@ -2,13 +2,13 @@
 	'use strict';
 
 	angular
-		.module('shipyard.eureka-services')
+		.module('shipyard.eureka_services')
 		.controller('EurekaServicesController', EurekaServicesController);
 
-	EurekaServicesController.$inject = ['eureka-services', 'EurekaServicesService', '$state', '$timeout'];
-	function EurekaServicesController(eureka-services, EurekaServicesService, $state, $timeout) {
+	EurekaServicesController.$inject = ['eureka_services', 'EurekaServicesService', '$state', '$timeout'];
+	function EurekaServicesController(eureka_services, EurekaServicesService, $state, $timeout) {
             var vm = this;
-            vm.eureka-services = eureka-services;
+            vm.eureka_services = eureka_services;
             vm.refresh = refresh;
             vm.removeEurekaService = removeEurekaService;
             vm.showRemoveEurekaServiceDialog = showRemoveEurekaServiceDialog;
@@ -22,7 +22,7 @@
             function refresh() {
                 EurekaServicesService.list()
                     .then(function(data) {
-                        vm.eureka-services = data; 
+                        vm.eureka_services = data; 
                     }, function(data) {
                         vm.error = data;
                     });

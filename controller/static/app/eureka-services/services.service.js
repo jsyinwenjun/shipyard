@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('shipyard.eureka-services')
+		.module('shipyard.eureka_services')
         .factory('EurekaServicesService', EurekaServicesService);
 
 	EurekaServicesService.$inject = ['$http'];
