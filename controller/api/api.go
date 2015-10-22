@@ -305,13 +305,13 @@ func (a *Api) Run() error {
 
 	eurekaRedirect := http.HandlerFunc(a.eurekaRedirect)
 
-	m := map[string]map[string]http.HandlerFunc{
+	n := map[string]map[string]http.HandlerFunc{
 		"GET": {
 			"/eureka/apps":                          swarmRedirect,
 		},
 	}
 	
-	for method, routes := range m {
+	for method, routes := range n {
 		for route, fct := range routes {
 			localRoute := route
 			localFct := fct
