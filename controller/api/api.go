@@ -307,7 +307,7 @@ func (a *Api) Run() error {
 
 	n := map[string]map[string]http.HandlerFunc{
 		"GET": {
-			"/eureka/apps":                          swarmRedirect,
+			"/eureka/apps":                          eurekaRedirect,
 		},
 	}
 	
@@ -329,8 +329,8 @@ func (a *Api) Run() error {
 	}
 	
 	eurekaAuthRouter := negroni.New()
-	eurekaAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
-	eurekaAccessRequired := access.NewAccessRequired(controllerManager)
+//	eurekaAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
+//	eurekaAccessRequired := access.NewAccessRequired(controllerManager)
 //	eurekaAuthRouter.Use(negroni.HandlerFunc(eurekaAuthRequired.HandlerFuncWithNext))
 //	eurekaAuthRouter.Use(negroni.HandlerFunc(eurekaAccessRequired.HandlerFuncWithNext))
 	eurekaAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
