@@ -20,7 +20,7 @@
                         	}else {
                         		addApp(res);
                         	}
-                        	var addApp = function(app) {
+                        	function addApp(app) {
                         		var num = 0;
                         		var addr = "";
                         		if (app.instance) {
