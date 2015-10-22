@@ -10,8 +10,8 @@
 	function getRoutes($stateProvider, $urlRouterProvider) {
 		$stateProvider
 			.state('dashboard.eureka_services', {
-			    url: '^/eureka-services',
-			    templateUrl: 'app/eureka-services/services.html',
+			    url: '^/eureka_services',
+			    templateUrl: 'app/eureka_services/services.html',
                             controller: 'EurekaServicesController',
                             controllerAs: 'vm',
                             authenticate: 'true',
