@@ -40,22 +40,16 @@
         <table class="ui sortable celled table" ng-show="vm.eureka_services">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Containers</th>
-                    <th>Reserved CPUs</th>
-                    <th>Reserved Memory</th>
-                    <th>Labels</th>
+                    <th>Service Name</th>
+                    <th>Instance Num</th>
+                    <th>IP Addresses</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="n in filteredEurekaServices = (vm.eureka_services | filter:tableFilter)">
                     <td>{{n.name}}</td>
-                    <td>{{n.addr}}</td>
-                    <td>{{n.containers}}</td>
-                    <td>{{n.reserved_cpus}}</td>
-                    <td>{{n.reserved_memory}}</td>
-                    <td>{{n.labels.join(', ')}}</td>
+                    <td>{{n.instance.length}}</td>
+                    <td><lable ng-repeat="m in n.instance">{{m.homePageUrl}}</lable></td>
                 </tr>
             </tbody>
         </table>

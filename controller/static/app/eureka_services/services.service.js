@@ -12,7 +12,8 @@
                     var promise = $http
                         .get('/eureka/apps')
                         .then(function(response) {
-                            return response.data;
+                        	var res = response.data.applications.application;
+                            return res ? res : [];
                         });
                     return promise;
                 },
