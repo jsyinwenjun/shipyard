@@ -65,7 +65,7 @@ func CmdServer(c *cli.Context) {
 	shipyardTlsKey := c.String("shipyard-tls-key")
 	shipyardTlsCACert := c.String("shipyard-tls-ca-cert")
 	
-	eurekaAddr = c.String("eureka")
+	eurekaAddr := c.String("eureka")
 
 	apiConfig := api.ApiConfig{
 		ListenAddr:         listenAddr,
