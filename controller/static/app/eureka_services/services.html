@@ -48,8 +48,8 @@
             <tbody>
                 <tr ng-repeat="n in filteredEurekaServices = (vm.eureka_services | filter:tableFilter)">
                     <td>{{n.name}}</td>
-                    <td>{{n.instance.length}}</td>
-                    <td><lable ng-repeat="m in n.instance">{{m.homePageUrl}}</lable></td>
+                    <td>{{n.number}}</td>
+                    <td>{{n.idAddr}}</td>
                 </tr>
             </tbody>
         </table>
