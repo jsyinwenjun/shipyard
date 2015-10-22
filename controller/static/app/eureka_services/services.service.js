@@ -28,11 +28,11 @@
                         			if (app.instance.length) {
                         				num = app.instance.length;
                         				angular.forEach(app.instance, function(ins) {
-                        					addr += ins.homePageUrl + ",";
+                        					addr += ins.ipAddr + ",";
                         				});
                         				addr = addr.substring(0, addr.length - 1);
                         			}else {
-                        				addr = app.instance.homePageUrl;
+                        				addr = app.instance.ipAddr;
                         			}
                         			
                         		}
