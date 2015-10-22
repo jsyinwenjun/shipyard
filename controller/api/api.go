@@ -22,7 +22,7 @@ import (
 type (
 	Api struct {
 		listenAddr         string
-		EurekaAddr         string
+		eurekaAddr         string
 		manager            manager.Manager
 		authWhitelistCIDRs []string
 		enableCors         bool
@@ -63,7 +63,7 @@ func writeCorsHeaders(w http.ResponseWriter, r *http.Request) {
 func NewApi(config ApiConfig) (*Api, error) {
 	return &Api{
 		listenAddr:         config.ListenAddr,
-		EurekaAddr:         config.EurekaAddr,
+		eurekaAddr:         config.EurekaAddr,
 		manager:            config.Manager,
 		authWhitelistCIDRs: config.AuthWhiteListCIDRs,
 		enableCors:         config.EnableCORS,
@@ -299,7 +299,7 @@ func (a *Api) Run() error {
 	
 	eurekaRouter := mux.NewRouter()
 	
-	a.eUrl = fmt.Sprintf("%s%s", scheme, EurekaAddr)
+	a.eUrl = fmt.Sprintf("%s%s", scheme, a.eurekaAddr)
 
 	log.Debugf("configured eureka proxy target: %s", a.eUrl)
 
