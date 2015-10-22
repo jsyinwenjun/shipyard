@@ -15,7 +15,12 @@
                         	var res = response.data.applications.application;
                         	if (!res) res = [];
                         	var apps = [];
-                        	angular.forEach(res, function(app) {
+                        	if (application.length) {
+                        		angular.forEach(res, addApp);
+                        	}else {
+                        		addApp(res);
+                        	}
+                        	var addApp = function(app) {
                         		var num = 0;
                         		var addr = "";
                         		if (app.instance) {
@@ -36,8 +41,8 @@
                         			number: num,
                         			idAddr: addr
                         		});
-                        	});
-                            return res ? res : [];
+                        	};
+                            return apps;
                         });
                     return promise;
                 },
