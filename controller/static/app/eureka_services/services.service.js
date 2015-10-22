@@ -15,7 +15,7 @@
                         	var res = response.data.applications.application;
                         	if (!res) res = [];
                         	var apps = [];
-                        	if (application.length) {
+                        	if (res.length) {
                         		angular.forEach(res, addApp);
                         	}else {
                         		addApp(res);
