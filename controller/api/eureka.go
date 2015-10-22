@@ -15,19 +15,3 @@ func (a *Api) eurekaRedirect(w http.ResponseWriter, req *http.Request) {
 	}
 	a.fwd.ServeHTTP(w, req)
 }
-
-type proxyWriter struct {
-	Body       *bytes.Buffer
-	Headers    *map[string][]string
-	StatusCode *int
-}
-
-func (p proxyWriter) Header() http.Header {
-	return *p.Headers
-}
-func (p proxyWriter) Write(data []byte) (int, error) {
-	return p.Body.Write(data)
-}
-func (p proxyWriter) WriteHeader(code int) {
-	*p.StatusCode = code
-}
