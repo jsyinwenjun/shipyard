@@ -15,7 +15,7 @@
                 'shipyard.nodes',
                 'shipyard.images',
                 'shipyard.filters',
-                'shipyard.svcregs',
+                'shipyard.eureka_services',
                 'angular-jwt',
                 'base64',
                 'selectize',
