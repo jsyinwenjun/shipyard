@@ -127,6 +127,11 @@ func main() {
 					Usage: "whitelist CIDR to bypass auth",
 					Value: &cli.StringSlice{},
 				},
+				cli.StringFlag{
+					Name:  "eureka",
+					Usage: "Eureka address",
+					Value: "eureka:8761",
+				},
 			},
 		},
 	}

@@ -22,6 +22,7 @@ import (
 type (
 	Api struct {
 		listenAddr         string
+		EurekaAddr         string
 		manager            manager.Manager
 		authWhitelistCIDRs []string
 		enableCors         bool
@@ -31,11 +32,13 @@ type (
 		tlsCertPath        string
 		tlsKeyPath         string
 		dUrl               string
+		eUrl               string
 		fwd                *forward.Forwarder
 	}
 
 	ApiConfig struct {
 		ListenAddr         string
+		EurekaAddr         string
 		Manager            manager.Manager
 		AuthWhiteListCIDRs []string
 		EnableCORS         bool
@@ -60,6 +63,7 @@ func writeCorsHeaders(w http.ResponseWriter, r *http.Request) {
 func NewApi(config ApiConfig) (*Api, error) {
 	return &Api{
 		listenAddr:         config.ListenAddr,
+		EurekaAddr:         config.EurekaAddr,
 		manager:            config.Manager,
 		authWhitelistCIDRs: config.AuthWhiteListCIDRs,
 		enableCors:         config.EnableCORS,
@@ -290,6 +294,54 @@ func (a *Api) Run() error {
 	globalMux.Handle("/v1.18/", swarmAuthRouter)
 	globalMux.Handle("/v1.19/", swarmAuthRouter)
 	globalMux.Handle("/v1.20/", swarmAuthRouter)
+	
+	//eureka
+	
+	eurekaRouter := mux.NewRouter()
+	
+	a.eUrl = fmt.Sprintf("%s%s", scheme, EurekaAddr)
+
+	log.Debugf("configured eureka proxy target: %s", a.eUrl)
+
+	eurekaRedirect := http.HandlerFunc(a.eurekaRedirect)
+
+	m := map[string]map[string]http.HandlerFunc{
+		"GET": {
+			"/eureka/apps":                          swarmRedirect
+		}
+	}
+	
+	for method, routes := range m {
+		for route, fct := range routes {
+			localRoute := route
+			localFct := fct
+			wrap := func(w http.ResponseWriter, r *http.Request) {
+				if a.enableCors {
+					writeCorsHeaders(w, r)
+				}
+				localFct(w, r)
+			}
+			localMethod := method
+
+			// add the new route
+			eurekaRouter.Path(localRoute).Methods(localMethod).HandlerFunc(wrap)
+		}
+	}
+	
+	eurekaAuthRouter := negroni.New()
+	eurekaAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
+	eurekaAccessRequired := access.NewAccessRequired(controllerManager)
+//	eurekaAuthRouter.Use(negroni.HandlerFunc(eurekaAuthRequired.HandlerFuncWithNext))
+//	eurekaAuthRouter.Use(negroni.HandlerFunc(eurekaAccessRequired.HandlerFuncWithNext))
+	eurekaAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+	eurekaAuthRouter.UseHandler(eurekaRouter)
+	
+	globalMux.Handle("/eureka/", eurekaAuthRouter)
+	
+	
+	
+	
+	
 
 	// check for admin user
 	if _, err := controllerManager.Account("admin"); err == manager.ErrAccountDoesNotExist {
