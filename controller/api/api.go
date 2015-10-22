@@ -307,8 +307,8 @@ func (a *Api) Run() error {
 
 	m := map[string]map[string]http.HandlerFunc{
 		"GET": {
-			"/eureka/apps":                          swarmRedirect
-		}
+			"/eureka/apps":                          swarmRedirect,
+		},
 	}
 	
 	for method, routes := range m {
