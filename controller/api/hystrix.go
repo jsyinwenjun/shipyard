@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"fmt"
+	log "github.com/Sirupsen/logrus"
 )
 
 func (a *Api) hystrixRedirect(w http.ResponseWriter, req *http.Request) {
