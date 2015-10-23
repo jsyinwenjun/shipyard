@@ -10,7 +10,7 @@
 	function getRoutes($stateProvider, $urlRouterProvider) {
 		$stateProvider
 			.state('dashboard.hystrix', {
-			    url: '^/real_time',
+			    url: '^/hystrix',
 			    templateUrl: 'app/hystrix/hystrix.html',
                             controller: 'HystrixController',
                             controllerAs: 'vm',
