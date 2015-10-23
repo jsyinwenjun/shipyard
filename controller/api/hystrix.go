@@ -10,7 +10,8 @@ func (a *Api) hystrixRedirect(w http.ResponseWriter, req *http.Request) {
 	var err error
 	
 	req.URL, err = url.ParseRequestURI(a.hUrl)
-	req.URL = fmt.Sprintf("%s?origin=%s/hystrix.stream", req.URL, a.sopcloudAddr)
+	c := url.Values{"origin": {fmt.Sprintf("%s/hystrix.stream", a.sopcloudAddr)}}
+	log.Errorf(c.Encode())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
