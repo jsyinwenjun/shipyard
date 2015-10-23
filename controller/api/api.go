@@ -158,6 +158,7 @@ func (a *Api) Run() error {
 	apiRouter.HandleFunc("/api/consolesession/{container}", a.createConsoleSession).Methods("GET")
 	apiRouter.HandleFunc("/api/consolesession/{token}", a.consoleSession).Methods("GET")
 	apiRouter.HandleFunc("/api/consolesession/{token}", a.removeConsoleSession).Methods("DELETE")
+	apiRouter.HandleFunc("/api/getcloudaddr", a.getCloudAddr).Methods("GET")
 
 	// global handler
 	globalMux.Handle("/", http.FileServer(http.Dir("static")))

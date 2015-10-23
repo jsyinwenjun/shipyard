@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"net/url"
+	"encoding/json"
 )
 
 func (a *Api) hystrixRedirect(w http.ResponseWriter, req *http.Request) {
@@ -14,4 +15,14 @@ func (a *Api) hystrixRedirect(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	a.fwd.ServeHTTP(w, req)
+}
+
+func (a *Api) getCloudAddr(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("content-type", "application/json")
+
+	sopcloudAddr := {"addr": fmt.Sprintf("%s/hystrix.stream", a.sopcloudAddr)}
+	if err := json.NewEncoder(w).Encode(sopcloudAddr); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

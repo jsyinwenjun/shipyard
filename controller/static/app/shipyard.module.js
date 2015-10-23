@@ -16,6 +16,7 @@
                 'shipyard.images',
                 'shipyard.filters',
                 'shipyard.eureka_services',
+                'shipyard.hystrix',
                 'angular-jwt',
                 'base64',
                 'selectize',
