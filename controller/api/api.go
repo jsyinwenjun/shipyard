@@ -312,13 +312,13 @@ func (a *Api) Run() error {
 
 	eurekaRedirect := http.HandlerFunc(a.eurekaRedirect)
 
-	n := map[string]map[string]http.HandlerFunc{
+	m = map[string]map[string]http.HandlerFunc{
 		"GET": {
 			"/eureka/apps":                          eurekaRedirect,
 		},
 	}
 	
-	for method, routes := range n {
+	for method, routes := range m {
 		for route, fct := range routes {
 			localRoute := route
 			localFct := fct
@@ -355,13 +355,13 @@ func (a *Api) Run() error {
 
 	hystrixRedirect := http.HandlerFunc(a.hystrixRedirect)
 
-	n := map[string]map[string]http.HandlerFunc{
+	m = map[string]map[string]http.HandlerFunc{
 		"GET": {
 			"/proxy.stream":                          hystrixRedirect,
 		},
 	}
 	
-	for method, routes := range n {
+	for method, routes := range m {
 		for route, fct := range routes {
 			localRoute := route
 			localFct := fct
