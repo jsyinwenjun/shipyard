@@ -349,7 +349,7 @@ func (a *Api) Run() error {
 	
 	hystrixRouter := mux.NewRouter()
 	
-	a.hUrl = fmt.Sprintf("%s%s", scheme, a.eurekaAddr)
+	a.hUrl = fmt.Sprintf("%s%s", scheme, a.hystrixAddr)
 
 	log.Debugf("configured hystrix proxy target: %s", a.hUrl)
 
