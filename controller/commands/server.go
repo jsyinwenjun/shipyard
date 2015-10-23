@@ -66,10 +66,14 @@ func CmdServer(c *cli.Context) {
 	shipyardTlsCACert := c.String("shipyard-tls-ca-cert")
 	
 	eurekaAddr := c.String("eureka")
+	hystrixAddr := c.String("hystrix")
+	sopcloudAddr := c.String("sopcloud")
 
 	apiConfig := api.ApiConfig{
 		ListenAddr:         listenAddr,
 		EurekaAddr:         eurekaAddr,
+		HystrixAddr:        hystrixAddr,
+		SopcloudAddr:       sopcloudAddr,
 		Manager:            controllerManager,
 		AuthWhiteListCIDRs: authWhitelist,
 		EnableCORS:         enableCors,

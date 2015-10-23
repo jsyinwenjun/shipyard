@@ -23,6 +23,8 @@ type (
 	Api struct {
 		listenAddr         string
 		eurekaAddr         string
+		hystrixAddr        string
+		sopcloudAddr       string
 		manager            manager.Manager
 		authWhitelistCIDRs []string
 		enableCors         bool
@@ -33,12 +35,15 @@ type (
 		tlsKeyPath         string
 		dUrl               string
 		eUrl               string
+		hUrl               string
 		fwd                *forward.Forwarder
 	}
 
 	ApiConfig struct {
 		ListenAddr         string
 		EurekaAddr         string
+		HystrixAddr        string
+		SopcloudAddr       string
 		Manager            manager.Manager
 		AuthWhiteListCIDRs []string
 		EnableCORS         bool
@@ -64,6 +69,8 @@ func NewApi(config ApiConfig) (*Api, error) {
 	return &Api{
 		listenAddr:         config.ListenAddr,
 		eurekaAddr:         config.EurekaAddr,
+		hystrixAddr:        config.HystrixAddr,
+		sopcloudAddr:       config.SopcloudAddr,
 		manager:            config.Manager,
 		authWhitelistCIDRs: config.AuthWhiteListCIDRs,
 		enableCors:         config.EnableCORS,
@@ -338,8 +345,48 @@ func (a *Api) Run() error {
 	
 	globalMux.Handle("/eureka/", eurekaAuthRouter)
 	
+	//hystrix
 	
+	hystrixRouter := mux.NewRouter()
 	
+	a.hUrl = fmt.Sprintf("%s%s", scheme, a.eurekaAddr)
+
+	log.Debugf("configured hystrix proxy target: %s", a.hUrl)
+
+	hystrixRedirect := http.HandlerFunc(a.hystrixRedirect)
+
+	n := map[string]map[string]http.HandlerFunc{
+		"GET": {
+			"/proxy.stream":                          hystrixRedirect,
+		},
+	}
+	
+	for method, routes := range n {
+		for route, fct := range routes {
+			localRoute := route
+			localFct := fct
+			wrap := func(w http.ResponseWriter, r *http.Request) {
+				if a.enableCors {
+					writeCorsHeaders(w, r)
+				}
+				localFct(w, r)
+			}
+			localMethod := method
+
+			// add the new route
+			hystrixRouter.Path(localRoute).Methods(localMethod).HandlerFunc(wrap)
+		}
+	}
+	
+	hystrixAuthRouter := negroni.New()
+//	hystrixAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
+//	hystrixAccessRequired := access.NewAccessRequired(controllerManager)
+//	hystrixAuthRouter.Use(negroni.HandlerFunc(hystrixAuthRequired.HandlerFuncWithNext))
+//	hystrixAuthRouter.Use(negroni.HandlerFunc(hystrixAccessRequired.HandlerFuncWithNext))
+	hystrixAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+	hystrixAuthRouter.UseHandler(hystrixRouter)
+	
+	globalMux.Handle("/proxy.stream", hystrixAuthRouter)
 	
 	
 

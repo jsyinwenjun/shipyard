@@ -132,6 +132,16 @@ func main() {
 					Usage: "Eureka address",
 					Value: "eureka:8761",
 				},
+				cli.StringFlag{
+					Name:  "hystrix",
+					Usage: "Hystrix address",
+					Value: "hystrix:8083",
+				},
+				cli.StringFlag{
+					Name:  "sopcloud",
+					Usage: "Sopcloud address",
+					Value: "http://sopcloud:7070/sop",
+				},
 			},
 		},
 	}
