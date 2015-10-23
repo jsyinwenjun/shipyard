@@ -6,6 +6,10 @@ import (
 	"encoding/json"
 )
 
+type CloudAddr struct {
+    addr string
+}
+
 func (a *Api) hystrixRedirect(w http.ResponseWriter, req *http.Request) {
 	var err error
 	
@@ -29,6 +33,3 @@ func (a *Api) getCloudAddr(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type CloudAddr struct {
-    addr string
-}
