@@ -159,6 +159,7 @@ func (a *Api) Run() error {
 	apiRouter.HandleFunc("/api/consolesession/{token}", a.consoleSession).Methods("GET")
 	apiRouter.HandleFunc("/api/consolesession/{token}", a.removeConsoleSession).Methods("DELETE")
 	apiRouter.HandleFunc("/api/getcloudaddr", a.getCloudAddr).Methods("GET")
+	
 
 	// global handler
 	globalMux.Handle("/", http.FileServer(http.Dir("static")))
@@ -167,9 +168,8 @@ func (a *Api) Run() error {
 		"^/containers/json",
 		"^/images/json",
 		"^/api/events",
-		"/api/getcloudaddr",
 	}
-	apiAuditor := audit.NewAuditor(controllerManager, auditExcludes)
+//	apiAuditor := audit.NewAuditor(controllerManager, auditExcludes)
 
 	// api router; protected by auth
 	apiAuthRouter := negroni.New()
@@ -177,7 +177,7 @@ func (a *Api) Run() error {
 //	apiAccessRequired := access.NewAccessRequired(controllerManager)
 //	apiAuthRouter.Use(negroni.HandlerFunc(apiAuthRequired.HandlerFuncWithNext))
 //	apiAuthRouter.Use(negroni.HandlerFunc(apiAccessRequired.HandlerFuncWithNext))
-	apiAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+//	apiAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
 	apiAuthRouter.UseHandler(apiRouter)
 	globalMux.Handle("/api/", apiAuthRouter)
 
