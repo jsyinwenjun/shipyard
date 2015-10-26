@@ -167,6 +167,7 @@ func (a *Api) Run() error {
 		"^/containers/json",
 		"^/images/json",
 		"^/api/events",
+		"/api/getcloudaddr",
 	}
 	apiAuditor := audit.NewAuditor(controllerManager, auditExcludes)
 
