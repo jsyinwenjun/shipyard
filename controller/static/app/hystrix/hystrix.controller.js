@@ -7,25 +7,25 @@
 
 	HystrixController.$inject = ['HystrixService', '$state', '$timeout'];
 	function HystrixController(HystrixService, $state, $timeout) {
-            var vm = this;
-            vm.refresh = refresh;
-            HystrixService.load()
-            .then(function(data) {
-                vm.cloudAddr = data;
-                vm.refresh();
-            }, function(data) {
-                vm.error = data;
-            });
-            
-            function refresh() {
-            	/**
-        		 * Queue up the monitor to start once the page has finished loading.
-        		 * 
-        		 * This is an inline script and expects to execute once on page load.
-        		 */ 
-        		 
-        		 // commands
-        		vm.hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
+        var vm = this;
+        vm.refresh = refresh;
+        HystrixService.load()
+        .then(function(data) {
+            vm.cloudAddr = data;
+            vm.refresh();
+        }, function(data) {
+            vm.error = data;
+        });
+        
+        function refresh() {
+        	/**
+    		 * Queue up the monitor to start once the page has finished loading.
+    		 * 
+    		 * This is an inline script and expects to execute once on page load.
+    		 */ 
+    		if (!window.hystrixMonitor) {
+    			// commands
+        		window.hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
         		
         		var stream = encodeURIComponent(vm.cloudAddr);
         		
@@ -47,13 +47,13 @@
         					$("#dependencies .loading").addClass("failed");
         			} else {
         				// sort by error+volume by default
-        				vm.hystrixMonitor.sortByErrorThenVolume();
+        				hystrixMonitor.sortByErrorThenVolume();
         				
         				// start the EventSource which will open a streaming connection to the server
         				var source = new EventSource(commandStream);
         				
         				// add the listener that will process incoming events
-        				source.addEventListener('message', vm.hystrixMonitor.eventSourceMessageListener, false);
+        				source.addEventListener('message', hystrixMonitor.eventSourceMessageListener, false);
 
         				//	source.addEventListener('open', function(e) {
         				//		console.console.log(">>> opened connection, phase: " + e.eventPhase);
@@ -73,8 +73,12 @@
         			}
         		},0);
         		
+    		}
+    		
+    		if (!window.dependencyThreadPoolMonito) {
+
         		// thread pool
-        		vm.dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
+        		window.dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
 
         		setTimeout(function() {
         			if(poolStream == undefined) {
@@ -82,13 +86,13 @@
         					$("#dependencyThreadPools .loading").html("The 'stream' argument was not provided.");
         					$("#dependencyThreadPools .loading").addClass("failed");
         			} else {
-        				vm.dependencyThreadPoolMonitor.sortByVolume();
+        				dependencyThreadPoolMonitor.sortByVolume();
         				
         				// start the EventSource which will open a streaming connection to the server
         				var source = new EventSource(poolStream);
         				
         				// add the listener that will process incoming events
-        				source.addEventListener('message', vm.dependencyThreadPoolMonitor.eventSourceMessageListener, false);
+        				source.addEventListener('message', dependencyThreadPoolMonitor.eventSourceMessageListener, false);
 
         				//	source.addEventListener('open', function(e) {
         				//		console.console.log(">>> opened connection, phase: " + e.eventPhase);
@@ -107,6 +111,7 @@
         				}, false);
         			}
         		},0);
-            }
+    		}
+        }
 	}
 })();
