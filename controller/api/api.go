@@ -385,7 +385,7 @@ func (a *Api) Run() error {
 //	hystrixAccessRequired := access.NewAccessRequired(controllerManager)
 //	hystrixAuthRouter.Use(negroni.HandlerFunc(hystrixAuthRequired.HandlerFuncWithNext))
 //	hystrixAuthRouter.Use(negroni.HandlerFunc(hystrixAccessRequired.HandlerFuncWithNext))
-	hystrixAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+//	hystrixAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
 	hystrixAuthRouter.UseHandler(hystrixRouter)
 	
 	globalMux.Handle("/proxy.stream", hystrixAuthRouter)
