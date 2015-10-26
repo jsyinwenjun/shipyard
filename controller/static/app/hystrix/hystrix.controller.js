@@ -5,10 +5,9 @@
 		.module('shipyard.hystrix')
 		.controller('HystrixController', HystrixController);
 
-	HystrixController.$inject = ['hystrix', 'HystrixService', '$state', '$timeout'];
-	function HystrixController(hystrix, HystrixService, $state, $timeout) {
+	HystrixController.$inject = ['HystrixService', '$state', '$timeout'];
+	function HystrixController(HystrixService, $state, $timeout) {
             var vm = this;
-            vm.hystrix = hystrix;
             vm.refresh = refresh;
 
             function refresh() {

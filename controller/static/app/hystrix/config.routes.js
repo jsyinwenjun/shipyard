@@ -15,13 +15,6 @@
                             controller: 'HystrixController',
                             controllerAs: 'vm',
                             authenticate: 'true',
-                            resolve: {
-                            	hystrix: ['HystrixService', '$state', '$stateParams', function (HystrixService, $state, $stateParams) {
-                                    return HystrixService.load().then(null, function(errorData) {	                            
-                                        $state.go('error');
-                                    }); 
-                                }] 
-                            }
 			})
 	}
 })();
