@@ -25,7 +25,7 @@
         		 */ 
         		 
         		 // commands
-        		var hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
+        		vm.hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
         		
         		var stream = encodeURIComponent(vm.cloudAddr);
         		
@@ -74,7 +74,7 @@
         		},0);
         		
         		// thread pool
-        		var dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
+        		vm.dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
 
         		setTimeout(function() {
         			if(poolStream == undefined) {
