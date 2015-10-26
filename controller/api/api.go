@@ -169,7 +169,7 @@ func (a *Api) Run() error {
 		"^/images/json",
 		"^/api/events",
 	}
-//	apiAuditor := audit.NewAuditor(controllerManager, auditExcludes)
+	apiAuditor := audit.NewAuditor(controllerManager, auditExcludes)
 
 	// api router; protected by auth
 	apiAuthRouter := negroni.New()
@@ -177,7 +177,7 @@ func (a *Api) Run() error {
 //	apiAccessRequired := access.NewAccessRequired(controllerManager)
 //	apiAuthRouter.Use(negroni.HandlerFunc(apiAuthRequired.HandlerFuncWithNext))
 //	apiAuthRouter.Use(negroni.HandlerFunc(apiAccessRequired.HandlerFuncWithNext))
-//	apiAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+	apiAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
 	apiAuthRouter.UseHandler(apiRouter)
 	globalMux.Handle("/api/", apiAuthRouter)
 
