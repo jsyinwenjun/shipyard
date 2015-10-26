@@ -14,7 +14,7 @@
 			    templateUrl: 'app/hystrix/hystrix.html',
                             controller: 'HystrixController',
                             controllerAs: 'vm',
-                            authenticate: 'true',
+                            authenticate: 'true'
 			})
 	}
 })();
