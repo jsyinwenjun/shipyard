@@ -33,8 +33,8 @@
         		
         		if(stream != undefined) {
         			
-        			var commandStream = location.host + "/proxy.stream?origin=" + stream;
-        			var poolStream = location.host + "/proxy.stream?origin=" + stream;
+        			var commandStream = location.origin + "/proxy.stream?origin=" + stream;
+        			var poolStream = location.origin + "/proxy.stream?origin=" + stream;
         			
         			$('#title_name').html("Hystrix Stream: " + decodeURIComponent(stream))
         		}
