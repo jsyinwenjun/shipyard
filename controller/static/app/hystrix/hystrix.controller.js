@@ -47,13 +47,13 @@
         					$("#dependencies .loading").addClass("failed");
         			} else {
         				// sort by error+volume by default
-        				hystrixMonitor.sortByErrorThenVolume();
+        				vm.hystrixMonitor.sortByErrorThenVolume();
         				
         				// start the EventSource which will open a streaming connection to the server
         				var source = new EventSource(commandStream);
         				
         				// add the listener that will process incoming events
-        				source.addEventListener('message', hystrixMonitor.eventSourceMessageListener, false);
+        				source.addEventListener('message', vm.hystrixMonitor.eventSourceMessageListener, false);
 
         				//	source.addEventListener('open', function(e) {
         				//		console.console.log(">>> opened connection, phase: " + e.eventPhase);
@@ -82,13 +82,13 @@
         					$("#dependencyThreadPools .loading").html("The 'stream' argument was not provided.");
         					$("#dependencyThreadPools .loading").addClass("failed");
         			} else {
-        				dependencyThreadPoolMonitor.sortByVolume();
+        				vm.dependencyThreadPoolMonitor.sortByVolume();
         				
         				// start the EventSource which will open a streaming connection to the server
         				var source = new EventSource(poolStream);
         				
         				// add the listener that will process incoming events
-        				source.addEventListener('message', dependencyThreadPoolMonitor.eventSourceMessageListener, false);
+        				source.addEventListener('message', vm.dependencyThreadPoolMonitor.eventSourceMessageListener, false);
 
         				//	source.addEventListener('open', function(e) {
         				//		console.console.log(">>> opened connection, phase: " + e.eventPhase);
