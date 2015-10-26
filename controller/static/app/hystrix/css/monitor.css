@@ -24,6 +24,7 @@
 #hystrix-content .menubar {
 	overflow: hidden;
 	border-bottom: 1px solid black;
+	font-size: 15px;
 }
 
 #hystrix-content .menubar div {
@@ -41,7 +42,6 @@
 #hystrix-content .menubar .title {
 	float: left;
 	padding-right: 20px;
-	
 	font-size: 110%;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-weight: bold;
