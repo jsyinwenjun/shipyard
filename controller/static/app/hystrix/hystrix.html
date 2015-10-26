@@ -56,19 +56,71 @@
 	<div id="dependencyThreadPools" class="row dependencyThreadPools"><span class="loading">Loading ...</span></div>
 	<input type="hidden" name="sopcloudAddr" value="{{vm.cloudAddr}}">
 	<script>
-		/**
-		 * Queue up the monitor to start once the page has finished loading.
-		 * 
-		 * This is an inline script and expects to execute once on page load.
-		 */ 
-		 
-		 // commands
 		var hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
 		
 		var stream = encodeURIComponent($("input[name='"sopcloudAddr"']").val());
 		
+		console.log("Stream: " + stream)
 		
+		if(stream != undefined) {
+			
+			var commandStream = "${contextPath}/proxy.stream?origin=" + stream;
+			var poolStream = "${contextPath}/proxy.stream?origin=" + stream;
+			
+			$('#title_name').html("Hystrix Stream: " + decodeURIComponent(stream))
+		}
+		console.log("Command Stream: " + commandStream)
+				
+		setTimeout(function() {
+			if(commandStream == undefined) {
+					console.log("commandStream is undefined")
+					$("#dependencies .loading").html("The 'stream' argument was not provided.");
+					$("#dependencies .loading").addClass("failed");
+			} else {
+				hystrixMonitor.sortByErrorThenVolume();
+				
+				var source = new EventSource(commandStream);
+				
+				source.addEventListener('message', hystrixMonitor.eventSourceMessageListener, false);
+
+
+				source.addEventListener('error', function(e) {
+					$("#dependencies .loading").html("Unable to connect to Command Metric Stream.");
+					$("#dependencies .loading").addClass("failed");
+				  if (e.eventPhase == EventSource.CLOSED) {
+					  console.log("Connection was closed on error: " + JSON.stringify(e));
+				  } else {
+					  console.log("Error occurred while streaming: " + JSON.stringify(e));
+				  }
+				}, false);
+			}
+		},0);
 		
+		var dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
+
+		setTimeout(function() {
+			if(poolStream == undefined) {
+					console.log("poolStream is undefined")
+					$("#dependencyThreadPools .loading").html("The 'stream' argument was not provided.");
+					$("#dependencyThreadPools .loading").addClass("failed");
+			} else {
+				dependencyThreadPoolMonitor.sortByVolume();
+				
+				var source = new EventSource(poolStream);
+				
+				source.addEventListener('message', dependencyThreadPoolMonitor.eventSourceMessageListener, false);
+
+				source.addEventListener('error', function(e) {
+                       $("#dependencies .loading").html("Unable to connect to Command Metric Stream.");
+                       $("#dependencies .loading").addClass("failed");
+				  if (e.eventPhase == EventSource.CLOSED) {
+					  console.log("Connection was closed on error: " + e);
+				  } else {
+					  console.log("Error occurred while streaming: " + e);
+				  }
+				}, false);
+			}
+		},0);
 		
 	</script>
 
