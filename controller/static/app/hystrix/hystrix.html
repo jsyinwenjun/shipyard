@@ -8,10 +8,6 @@
 	<!-- Our custom CSS -->
 	<link rel="stylesheet" type="text/css" href="./app/hystrix/css/monitor.css" />
 
-	<!-- Javascript to monitor and display -->
-	<script type="text/javascript" src="./app/hystrix/js/jquery.tinysort.min.js"></script>
-	<script type="text/javascript" src="./app/hystrix/js/tmpl.js"></script>
-	
 	<!-- HystrixCommand -->
 	<script type="text/javascript" src="./app/hystrix/components/hystrixCommand/hystrixCommand.js"></script>
 	<link rel="stylesheet" type="text/css" href="./app/hystrix/components/hystrixCommand/hystrixCommand.css" />
@@ -61,7 +57,6 @@
 	</div>
 	<div id="dependencyThreadPools" class="row dependencyThreadPools"><span class="loading">Loading ...</span></div>
 
-	<input type="hidden" name="sopcloudAddr" value="{{vm.cloudAddr}}">
 	<script>
 		/**
 		 * Queue up the monitor to start once the page has finished loading.
@@ -72,7 +67,7 @@
 		 // commands
 		var hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
 		
-		var stream = encodeURIComponent($("input[name='sopcloudAddr']").val());//getUrlVars()["stream"];
+		var stream = encodeURIComponent({{vm.cloudAddr}});//getUrlVars()["stream"];
 		
 		console.log("Stream: " + stream)
 		
