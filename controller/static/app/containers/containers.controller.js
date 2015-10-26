@@ -285,7 +285,7 @@
 			var shortestName = "";
 			var minComponents = 99;
 			
-			var names = container.Names
+			var names = container ? container.Names : [];
 			for(var i=0; i<names.length; i++) {
 				var name = names[i];
 				var numComponents = name.split('/').length
