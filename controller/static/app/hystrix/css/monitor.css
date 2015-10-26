@@ -1,15 +1,15 @@
-.container {
+#hystrix-content .container {
 	padding-left: 20px;
 	padding-right: 20px;
 }
 
-.row {
+#hystrix-content .row {
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;
 }
 
-.spacer {
+#hystrix-content .spacer {
 	width: 100%;
 	margin: 0 auto;
 	padding-top:4px;
@@ -17,16 +17,16 @@
 }
 
 
-.last {
+#hystrix-content .last {
 	margin-right: 0px;
 }
 
-.menubar {
+#hystrix-content .menubar {
 	overflow: hidden;
 	border-bottom: 1px solid black;
 }
 
-.menubar div {
+#hystrix-content .menubar div {
 	padding-bottom:5px;
 
 	margin: 0 auto;
@@ -38,7 +38,7 @@
 	float:left;
 }
 
-.menubar .title {
+#hystrix-content .menubar .title {
 	float: left;
 	padding-right: 20px;
 	
@@ -49,20 +49,20 @@
 	vertical-align: bottom;
 }
 
-.menubar .menu_actions {
+#hystrix-content .menubar .menu_actions {
 	float: left;
 	position:relative;
 	top: 4px;
 }
 
-.menubar .menu_legend {
+#hystrix-content .menubar .menu_legend {
 	float: right;
 	position:relative;
 	top: 4px;
 	
 }
 
-h3.sectionHeader {
+#hystrix-content h3.sectionHeader {
 	color: black;
 	font-size: 110%;
 	padding-top: 4px;
@@ -72,24 +72,24 @@ h3.sectionHeader {
 	background: lightgrey;
 }
 
-.success {
+#hystrix-content .success {
 	color: green;	
 }
-.shortCircuited {
+#hystrix-content .shortCircuited {
 	color: blue;	
 }
-.timeout {
+#hystrix-content .timeout {
 	color: #FF9900;	 /* shade of orange */
 }
-.failure {
+#hystrix-content .failure {
 	color: red;	
 }
 
-.rejected {
+#hystrix-content .rejected {
 	color: purple;
 }
 	
-.exceptionsThrown {
+#hystrix-content .exceptionsThrown {
 	color: brown;
 }
 

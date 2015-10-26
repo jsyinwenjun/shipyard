@@ -1,25 +1,25 @@
 @IMPORT url("resets.css");
 
-body {
+body #hystrix-content{
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-img, object, embed {
+#hystrix-content img, #hystrix-content object, #hystrix-content embed {
 	max-width: 100%;
 }
 
-img {
+#hystrix-content img {
 	height: auto;
 }
 
 
-#header {
+#hystrix-content #header {
 	background: #FFFFFF url(http://raw.github.com/wiki/Netflix/Hystrix/images/hystrix-logo-tagline-tiny.png) no-repeat scroll 99% 0%;
 	height: 65px;
 	margin-bottom: 5px;
 }
 
-#header h2 {
+#hystrix-content #header h2 {
 	float:left;
 	color: black;
 	position:relative;
@@ -29,13 +29,13 @@ img {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-#header .header_nav {
+#hystrix-content #header .header_nav {
 	position:absolute;
 	top:48px;
 	right:15px;
 }
 
-#header .header_links {
+#hystrix-content #header .header_links {
 	float:left;
 	color: lightgray;
 	font-size: 18px;
@@ -44,11 +44,11 @@ img {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
-#header .header_links a {
+#hystrix-content #header .header_links a {
 	color: white;
 }
 
-#header .header_clusters {
+#hystrix-content #header .header_clusters {
 	float:left;
 	position:relative;
 	padding-left: 10px;
@@ -59,12 +59,12 @@ img {
 
 @media screen and (min-width: 1500px) {
 	
-	#header .header_nav {
+	#hystrix-content #header .header_nav {
 		top:13px;
 		right:130px;
 	}
 	
-	#header {
+	#hystrix-content #header {
 		background: #FFFFFF url(http://raw.github.com/wiki/Netflix/Hystrix/images/hystrix-logo-tagline-tiny.png) no-repeat scroll 99% 50%;
 		height: 65px;
 	}
