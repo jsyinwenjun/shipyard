@@ -75,7 +75,7 @@
         		
     		}
     		
-    		if (!window.dependencyThreadPoolMonito) {
+    		if (!window.dependencyThreadPoolMonitor) {
 
         		// thread pool
         		window.dependencyThreadPoolMonitor = new HystrixThreadPoolMonitor('dependencyThreadPools');
