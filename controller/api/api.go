@@ -282,11 +282,11 @@ func (a *Api) Run() error {
 	}
 
 	swarmAuthRouter := negroni.New()
-	swarmAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
-	swarmAccessRequired := access.NewAccessRequired(controllerManager)
-	swarmAuthRouter.Use(negroni.HandlerFunc(swarmAuthRequired.HandlerFuncWithNext))
-	swarmAuthRouter.Use(negroni.HandlerFunc(swarmAccessRequired.HandlerFuncWithNext))
-	swarmAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
+//	swarmAuthRequired := mAuth.NewAuthRequired(controllerManager, a.authWhitelistCIDRs)
+//	swarmAccessRequired := access.NewAccessRequired(controllerManager)
+//	swarmAuthRouter.Use(negroni.HandlerFunc(swarmAuthRequired.HandlerFuncWithNext))
+//	swarmAuthRouter.Use(negroni.HandlerFunc(swarmAccessRequired.HandlerFuncWithNext))
+//	swarmAuthRouter.Use(negroni.HandlerFunc(apiAuditor.HandlerFuncWithNext))
 	swarmAuthRouter.UseHandler(swarmRouter)
 	globalMux.Handle("/containers/", swarmAuthRouter)
 	globalMux.Handle("/_ping", swarmAuthRouter)
