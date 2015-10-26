@@ -5,7 +5,6 @@ import (
 	"net/url"
 	"encoding/json"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 )
 
 type CloudAddr struct {
@@ -29,7 +28,6 @@ func (a *Api) getCloudAddr(w http.ResponseWriter, r *http.Request) {
 	sopcloudAddr := CloudAddr{
 			addr: fmt.Sprintf("%s/hystrix.stream", a.sopcloudAddr),
 	}
-	log.Debugf(sopcloudAddr)
 	if err := json.NewEncoder(w).Encode(sopcloudAddr); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
