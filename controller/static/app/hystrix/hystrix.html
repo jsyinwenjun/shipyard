@@ -56,6 +56,21 @@
 	<div id="dependencyThreadPools" class="row dependencyThreadPools"><span class="loading">Loading ...</span></div>
 	<input type="hidden" name="sopcloudAddr" value="{{vm.cloudAddr}}">
 	<script>
+		/**
+		 * Queue up the monitor to start once the page has finished loading.
+		 * 
+		 * This is an inline script and expects to execute once on page load.
+		 */ 
+		 
+		 // commands
+		var hystrixMonitor = new HystrixCommandMonitor('dependencies', {includeDetailIcon:false});
+		
+		var stream = encodeURIComponent($("input[name='"sopcloudAddr"']").val());
+		
+		console.log("Stream: " + stream)
+		
+		
+		
 		
 	</script>
 
