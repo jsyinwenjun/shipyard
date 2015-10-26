@@ -1,8 +1,6 @@
 <div class="ui padded grid">
 
-<div class="row">
-
-<!-- Setup base for everything -->
+	<!-- Setup base for everything -->
 	<link rel="stylesheet" type="text/css" href="./app/hystrix/css/global.css" />
 	
 	<!-- Our custom CSS -->
@@ -17,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="./app/hystrix/components/hystrixThreadPool/hystrixThreadPool.css" />
 
 
-	<div class="row">
+	<div class="row" ng-show="vm.cloudAddr">
 		<div class="menubar">
 			<div class="title">
 			Circuit
@@ -175,7 +173,5 @@
 		}
 		
 	</script>
-
-</div>
 
 </div>
