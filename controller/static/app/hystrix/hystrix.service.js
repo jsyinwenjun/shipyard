@@ -3,7 +3,7 @@
 
 	angular
 		.module('shipyard.hystrix')
-        .factory('HystrixService', EurekaServicesService);
+        .factory('HystrixService', HystrixService);
 
 	HystrixService.$inject = ['$http'];
         function HystrixService($http) {
