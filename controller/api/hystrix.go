@@ -26,7 +26,7 @@ func (a *Api) getCloudAddr(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 
 	sopcloudAddr := CloudAddr{
-			addr: fmt.Sprintf("%s/hystrix.stream", a.sopcloudAddr),
+			addr: "asdasd",//fmt.Sprintf("%s/hystrix.stream", a.sopcloudAddr),
 	}
 	if err := json.NewEncoder(w).Encode(sopcloudAddr); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
